@@ -23,6 +23,8 @@ func initialize(start_position, player_position):
 	
 	# We calculate a random speed (integer)
 	var random_speed = randi_range(min_speed, max_speed)
+	
+	$AnimationPlayer.speed_scale = random_speed / min_speed
 	# We calculate a forward velocity that represents the speed.
 	velocity = Vector3.FORWARD * random_speed
 	# We then rotate the velocity vector based on the mob's Y rotation

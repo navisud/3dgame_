@@ -14,14 +14,18 @@ var target_velocity = Vector3.ZERO
 func _physics_process(delta):
 	var direction = Vector3.ZERO
 	
-	if Input.is_action_pressed("move_right"):
-		direction.x += 1
-	if Input.is_action_pressed("move_left"):
-		direction.x -= 1
-	if Input.is_action_pressed("move_forward"):
-		direction.z -= 1
-	if Input.is_action_pressed("move_back"):
-		direction.z += 1
+	if direction != Vector3.ZERO:
+		$AnimationPlayer.speed_scale = 4
+		if Input.is_action_pressed("move_right"):
+			direction.x += 1
+		if Input.is_action_pressed("move_left"):
+			direction.x -= 1
+		if Input.is_action_pressed("move_forward"):
+			direction.z -= 1
+		if Input.is_action_pressed("move_back"):
+			direction.z += 1
+	else: 
+		$AnimationPlayer.speed_scale = 1
 	
 	# Iterate through all collisions that occurred this frame
 	for index in range(get_slide_collision_count()):
@@ -66,6 +70,8 @@ func _physics_process(delta):
 		# moving character
 		velocity = target_velocity
 		move_and_slide()
+		
+	$Pivot.rotation.x = PI / 6 * velocity.y / jump_impulse
 
 func die():
 	hit.emit()
